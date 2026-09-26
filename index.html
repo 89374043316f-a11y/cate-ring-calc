@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор кейтеринга</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none">
+        <rect x="4" y="14" width="32" height="20" rx="3" fill="none" stroke="var(--color-primary)" stroke-width="2.5"/>
+        <path d="M4 18 Q10 12 16 18 Q22 12 28 18 Q34 12 36 18" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M8 24 L10 28 M14 24 L16 28 M20 24 L22 28 M26 24 L28 28 M32 24 L34 28" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 6 Q14 2 18 2 Q22 2 22 6 L20 10 L16 10 Z" fill="var(--color-gold)" opacity="0.8"/>
+      </svg>
+      <div class="logo-text">
+        Кейтеринг
+        <span>Планировщик количества и упаковки</span>
+      </div>
+    </div>
+    <nav class="tab-nav" id="tab-nav">
+      <button class="tab-btn active" data-page="calculator">Калькулятор</button>
+      <button class="tab-btn" data-page="shashlik">Шашлык</button>
+      <button class="tab-btn" data-page="prices">Цены</button>
+      <button class="tab-btn" data-page="kbzu">КБЖУ</button>
+      <button class="tab-btn" data-page="products">Продукты</button>
+    </nav>
+    <button class="theme-toggle" data-theme-toggle aria-label="Переключить на тёмную тему">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<div class="app-page active" id="page-calculator">
+  <h1 class="page-title">Калькулятор кейтеринга</h1>
+  <p class="page-subtitle">Хлеб, напитки и алкоголь — с разбивкой по упаковке и страховым запасом</p>
+
+  <div class="layout">
+    <!-- Input Panel -->
+    <aside class="input-panel">
+      <h2>Параметры мероприятия</h2>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="guests">Количество гостей</label>
+          <span class="field-value" id="guests-val">10</span>
+        </div>
+        <input type="range" id="guests" min="2" max="25" step="1" value="10">
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="duration">Длительность</label>
+          <span class="field-value" id="duration-val">4 ч</span>
+        </div>
+        <input type="range" id="duration" min="1" max="12" step="0.5" value="4">
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label>Тип мероприятия</label>
+        </div>
+        <div class="toggle-group" id="event-type-group">
+          <button class="toggle-btn active" data-type="event" data-value="dacha">День на даче</button>
+          <button class="toggle-btn" data-type="event" data-value="party">Вечеринка</button>
+          <button class="toggle-btn" data-type="event" data-value="picnic">Пикник</button>
+          <button class="toggle-btn" data-type="event" data-value="feast">Застолье</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label>Погода</label>
+        </div>
+        <div class="toggle-group" id="weather-group">
+          <button class="toggle-btn" data-type="weather" data-value="cool">Прохладно</button>
+          <button class="toggle-btn" data-type="weather" data-value="warm">Тепло</button>
+          <button class="toggle-btn active" data-type="weather" data-value="hot">Жаркий день</button>
+          <button class="toggle-btn" data-type="weather" data-value="veryhot">Очень жарко</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="reserve-bev">Запас безалк.</label>
+          <span class="field-value" id="reserve-bev-val">+5%</span>
+        </div>
+        <input type="range" id="reserve-bev" min="0" max="20" step="5" value="5">
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="reserve-alc">Запас алкоголя</label>
+          <span class="field-value" id="reserve-alc-val">+10%</span>
+        </div>
+        <input type="range" id="reserve-alc" min="0" max="20" step="5" value="10">
+      </div>
+
+      <div class="field">
+        <div class="check-field">
+          <input type="checkbox" id="alcohol" checked>
+          <label for="alcohol">Включить алкоголь</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="check-field">
+          <input type="checkbox" id="extra-guests" checked>
+          <label for="extra-guests">Запас алкоголя на +2 гостей</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="check-field">
+          <input type="checkbox" id="salads">
+          <label for="salads">Добавить салаты</label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Results Panel -->
+    <div class="results-panel">
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid" id="kpi-grid"></div>
+
+      <!-- Beverages Section -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon bg-water">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-blue)" stroke-width="2"><path d="M12 2 Q6 8 6 14 Q6 19 12 19 Q18 19 18 14 Q18 8 12 2 Z"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Безалкогольные напитки</div>
+            <div class="section-subtitle">Соки и газировка</div>
+          </div>
+        </div>
+        <table class="results-table" id="beverages-table"></table>
+      </div>
+
+      <!-- Bread & Bakery -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon bg-bread">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M4 12 Q4 7 12 7 Q20 7 20 12 L20 18 Q20 20 18 20 L6 20 Q4 20 4 18 Z"/><path d="M6 12 L18 12 M6 15 L18 15" stroke-dasharray="2 2"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Хлеб и выпечка</div>
+            <div class="section-subtitle">Вес в килограммах</div>
+          </div>
+        </div>
+        <table class="results-table" id="bread-table"></table>
+      </div>
+
+      <!-- Snacks -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon bg-soda">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-purple)" stroke-width="2"><path d="M7 3 L17 3 L16 21 L8 21 Z"/><path d="M9 7 L15 7 M9 11 L15 11 M9 15 L15 15"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Закуски</div>
+            <div class="section-subtitle">Чипсы, начос и рыбные закуски</div>
+          </div>
+        </div>
+        <table class="results-table" id="snacks-table"></table>
+      </div>
+
+      <!-- Salads (optional) -->
+      <div class="section-card" id="salads-section" style="display:none">
+        <div class="section-header">
+          <div class="section-icon bg-bread">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M8 10 Q12 6 16 10 M8 14 Q12 10 16 14"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Салаты</div>
+            <div class="section-subtitle">Овощные, мясные и рыбные</div>
+          </div>
+        </div>
+        <table class="results-table" id="salads-table"></table>
+      </div>
+
+      <!-- Alcohol -->
+      <div class="section-card" id="alcohol-section">
+        <div class="section-header">
+          <div class="section-icon bg-beer">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><path d="M7 4 L7 20 Q7 22 9 22 L15 22 Q17 22 17 20 L17 4 Z M17 8 Q20 8 20 11 Q20 14 17 14"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Алкогольные напитки</div>
+            <div class="section-subtitle">Пиво и крепкие напитки — с запасом на +2 гостей</div>
+          </div>
+        </div>
+        <table class="results-table" id="alcohol-table"></table>
+      </div>
+
+      <!-- Packaging Breakdown -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon bg-soda">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-purple)" stroke-width="2"><rect x="7" y="3" width="10" height="18" rx="1"/><path d="M9 3 L15 3 M9 7 L15 7 M9 11 L15 11"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Разбивка по упаковке</div>
+            <div class="section-subtitle">Рекомендуемые размеры бутылок и коробок</div>
+          </div>
+        </div>
+        <div class="packaging-grid" id="packaging-grid"></div>
+      </div>
+
+      <!-- Reserve Banner -->
+      <div class="reserve-banner" id="reserve-banner"></div>
+
+      <!-- Grand Totals -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon bg-water">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-blue)" stroke-width="2"><path d="M3 12 L12 3 L21 12 M5 10 L5 21 L19 21 L19 10"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Итоговые значения</div>
+            <div class="section-subtitle">Все категории вместе со страховым запасом</div>
+          </div>
+        </div>
+        <div class="summary-grid" id="grand-totals"></div>
+      </div>
+
+      <p class="calc-note">Расчёты основаны на отраслевых стандартах кейтеринга. Нормы потребления на человека корректируются в зависимости от типа мероприятия и погоды. Размеры упаковки соответствуют общедоступной коммерческой таре. Всегда сверяйтесь с поставщиком.</p>
+    </div>
+  </div>
+</div>
+<!-- ==================== PAGE: SHASHLIK ==================== -->
+<div class="app-page" id="page-shashlik">
+  <h1 class="page-title">Шашлык и маринад</h1>
+  <p class="page-subtitle">Ингредиенты и рецепты маринада на количество гостей</p>
+
+  <div class="section-card">
+    <div class="marinade-meat-note">
+      На <strong id="marinade-guests">10</strong> гостей нужно примерно <strong id="marinade-meat-kg">5 кг</strong> мяса (из расчёта 500 г/чел). Ингредиенты ниже пересчитаны на это количество.
+    </div>
+    <div class="marinade-grid" id="marinade-grid" style="margin-top: var(--space-5);"></div>
+  </div>
+</div>
+<!-- ==================== PAGE: PRICES ==================== -->
+<div class="app-page" id="page-prices">
+  <h1 class="page-title">Цены и общий счёт</h1>
+  <p class="page-subtitle">Сравнение цен по магазинам и оценка общей стоимости на основе данных калькулятора</p>
+
+  <div class="results-panel">
+
+    <!-- Total cost banner -->
+    <div class="cost-total-banner">
+      <div class="cost-total-label">Ориентировочный общий счёт по лучшим ценам</div>
+      <div class="cost-total-value" id="cost-total-value">0 ₽</div>
+      <div class="cost-per-guest">На гостя: <strong id="cost-per-guest-value">0 ₽</strong></div>
+    </div>
+
+    <!-- Cost breakdown by category -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-water">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-blue)" stroke-width="2"><path d="M3 12 L12 3 L21 12 M5 10 L5 21 L19 21 L19 10"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Общий счёт по категориям</div>
+          <div class="section-subtitle">Расчёт на основе количеств из калькулятора × минимальная цена из магазинов</div>
+        </div>
+      </div>
+      <table class="results-table" id="cost-breakdown-table"></table>
+    </div>
+
+    <!-- Alcohol prices -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-beer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2"><path d="M7 4 L7 20 Q7 22 9 22 L15 22 Q17 22 17 20 L17 4 Z M17 8 Q20 8 20 11 Q20 14 17 14"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Алкоголь</div>
+          <div class="section-subtitle">Ягермейстер, Бугульма, Медовуха, Джин, Пиво — со ссылками на магазины</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="price-table" id="price-table-alcohol"></table>
+      </div>
+    </div>
+
+    <!-- Snacks prices -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-soda">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-purple)" stroke-width="2"><path d="M7 3 L17 3 L16 21 L8 21 Z"/><path d="M9 7 L15 7 M9 11 L15 11 M9 15 L15 15"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Закуски</div>
+          <div class="section-subtitle">Чипсы, Начос, Рыбные закуски</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="price-table" id="price-table-snacks"></table>
+      </div>
+    </div>
+
+    <!-- Salads prices -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-bread">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M8 10 Q12 6 16 10 M8 14 Q12 10 16 14"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Салаты</div>
+          <div class="section-subtitle">Готовые салаты — ориентировочные цены</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="price-table" id="price-table-salads"></table>
+      </div>
+    </div>
+
+    <!-- Meat prices -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-bread">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2"><path d="M4 8 Q4 5 7 5 L17 5 Q20 5 20 8 L20 14 Q20 17 17 17 L7 17 Q4 17 4 14 Z"/><path d="M8 5 L8 2 M12 5 L12 2 M16 5 L16 2"/><path d="M7 20 L17 20 M9 20 L9 17 M15 20 L15 17"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Мясо</div>
+          <div class="section-subtitle">Свинина шея, Говядина, Курица филе — цена за кг</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="price-table" id="price-table-meat"></table>
+      </div>
+    </div>
+
+    <!-- Marinade ingredient prices -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-bread">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M12 2 L4 6 L4 12 Q4 18 12 22 Q20 18 20 12 L20 6 Z"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Продукты для маринада</div>
+          <div class="section-subtitle">Лук, помидоры, томатная паста, лимон, чеснок и другие ингредиенты</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="price-table" id="price-table-marinade"></table>
+      </div>
+    </div>
+
+    <p class="price-disclaimer" style="text-align:center;">
+      Цены указаны ориентировочно по состоянию на сентябрь 2026 г. на основе данных с сайтов Лента, Дикси, Глобус, Магнит и Пятёрочка и могут отличаться в зависимости от региона и акций. Общий счёт рассчитывается по минимальной доступной цене среди указанных магазинов и не учитывает скидки и доставку. Актуальные цены проверяйте на сайтах магазинов по ссылкам выше.
+    </p>
+  </div>
+</div>
+<!-- ==================== PAGE: KBZU ==================== -->
+<div class="app-page" id="page-kbzu">
+  <h1 class="page-title">КБЖУ мероприятия</h1>
+  <p class="page-subtitle">Калорийность, белки, жиры и углеводы по всем позициям калькулятора, с возможностью добавить свои блюда</p>
+
+  <div class="results-panel">
+
+    <!-- KBZU summary -->
+    <div class="kbzu-summary-grid" id="kbzu-summary-grid"></div>
+
+    <!-- Per person summary -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-water">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-blue)" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21 Q4 14 12 14 Q20 14 20 21"/></svg>
+        </div>
+        <div>
+          <div class="section-title">На одного гостя</div>
+          <div class="section-subtitle">Суммарное КБЖУ, разделённое на количество гостей</div>
+        </div>
+      </div>
+      <div class="summary-grid" id="kbzu-per-person-grid"></div>
+    </div>
+
+    <!-- Auto items from calculator -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-bread">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Продукты из калькулятора</div>
+          <div class="section-subtitle">Автоматически рассчитано по количествам с вкладки «Калькулятор»</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="results-table kbzu-table" id="kbzu-auto-table"></table>
+      </div>
+    </div>
+
+    <!-- Custom dishes -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon bg-soda">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-purple)" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Свои блюда</div>
+          <div class="section-subtitle">Добавьте произвольное блюдо с расчётом КБЖУ на вес</div>
+        </div>
+      </div>
+      <form class="add-dish-form" id="add-dish-form">
+        <div class="field" style="grid-column: 1 / -1;">
+          <label for="dish-name">Название блюда</label>
+          <input type="text" id="dish-name" list="dish-suggestions" placeholder="Начните вводить: плов, борщ, оливье..." autocomplete="off" required>
+          <datalist id="dish-suggestions"></datalist>
+        </div>
+        <div class="field">
+          <label for="dish-weight">Вес, г</label>
+          <input type="number" id="dish-weight" min="1" step="1" placeholder="500" required>
+        </div>
+        <div class="field">
+          <label for="dish-kcal">Ккал/100г</label>
+          <input type="number" id="dish-kcal" min="0" step="0.1" placeholder="150" required>
+        </div>
+        <div class="field">
+          <label for="dish-protein">Белки/100г</label>
+          <input type="number" id="dish-protein" min="0" step="0.1" placeholder="10" required>
+        </div>
+        <div class="field">
+          <label for="dish-fat">Жиры/100г</label>
+          <input type="number" id="dish-fat" min="0" step="0.1" placeholder="8" required>
+        </div>
+        <div class="field">
+          <label for="dish-carbs">Углеводы/100г</label>
+          <input type="number" id="dish-carbs" min="0" step="0.1" placeholder="12" required>
+        </div>
+        <div class="field" style="display:flex; gap: var(--space-3); align-items:end;">
+          <button type="submit" class="btn-primary" style="width:100%;">Добавить блюдо</button>
+        </div>
+      </form>
+
+      <!-- Live preview -->
+      <div class="dish-preview" id="dish-preview" style="display:none;">
+        <div class="dish-preview-title">Итоговый расчёт</div>
+        <div class="dish-preview-name" id="dish-preview-name"></div>
+        <div class="dish-preview-grid">
+          <div class="dish-preview-item">
+            <span class="dish-preview-label">Ккал</span>
+            <span class="dish-preview-value macro-k" id="dish-preview-kcal">—</span>
+          </div>
+          <div class="dish-preview-item">
+            <span class="dish-preview-label">Белки</span>
+            <span class="dish-preview-value macro-p" id="dish-preview-protein">—</span>
+          </div>
+          <div class="dish-preview-item">
+            <span class="dish-preview-label">Жиры</span>
+            <span class="dish-preview-value macro-f" id="dish-preview-fat">—</span>
+          </div>
+          <div class="dish-preview-item">
+            <span class="dish-preview-label">Углеводы</span>
+            <span class="dish-preview-value macro-c" id="dish-preview-carbs">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto; margin-top: var(--space-5);">
+        <table class="results-table kbzu-table" id="kbzu-custom-table"></table>
+      </div>
+    </div>
+
+    <p class="calc-note">Значения КБЖУ для продуктов калькулятора — средние ориентиры на 100 г/мл продукта. Фактические значения зависят от рецептуры и производителя. Сырое мясо учтено до приготовления, алкоголь — по готовому напитку.</p>
+  </div>
+</div>
+
+<!-- ==================== PAGE: PRODUCTS ==================== -->
+<div class="app-page" id="page-products">
+  <h1 class="page-title">Продукты из калькулятора</h1>
+  <p class="page-subtitle">Список закупки с ручной корректировкой. Данные синхронизируются между всеми устройствами.</p>
+
+  <div class="products-sync-bar">
+    <div class="sync-status">
+      <span class="sync-dot" id="sync-dot"></span>
+      <span class="sync-text" id="sync-text">Подключение...</span>
+    </div>
+    <div class="sync-actions">
+      <button class="btn-secondary btn-sm" id="btn-sync-refresh" onclick="syncProducts(true)">Обновить</button>
+      <button class="btn-secondary btn-sm" id="btn-sync-reset" onclick="resetProducts()">Сбросить</button>
+    </div>
+  </div>
+
+  <div id="products-list" class="products-list"></div>
+
+  <div class="products-summary" id="products-summary">
+    <div class="products-summary-title">Итого по закупке</div>
+    <div class="products-summary-grid" id="products-summary-grid"></div>
+  </div>
+</div>
+</main>
+
+<script src="js/app.js"></script>
+<script data-pplx-inline-edit src="js/inline-edit.js"></script>
+</body>
+</html>
